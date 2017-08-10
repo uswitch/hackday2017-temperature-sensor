@@ -17,11 +17,11 @@ defmodule TemperatureSensor do
 
     GPIO.write(a_pid, 1)
 
-    current_time = :os.system_time(:millisecond)
+    current_time = :os.system_time(:microsecond)
 
     read_gpio(GPIO.read(b_pid), b_pid)
 
-    end_time = :os.system_time(:millisecond)
+    end_time = :os.system_time(:microsecond)
 
     end_time - current_time
   end
