@@ -36,7 +36,7 @@ defmodule TemperatureSensor do
     t
   end
 
-  def setup
+  def setup do
     {:ok, a_in} = GPIO.start_link(@a_pin, :input)
     {:ok, b_out} = GPIO.start_link(@b_pin, :output)
     {:ok, a_out} = GPIO.start_link(@a_pin, :output)
