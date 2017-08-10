@@ -51,7 +51,8 @@ defmodule TemperatureSensor.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   def deps do
-    [{:nerves, "~> 0.7", runtime: false}] ++
+    [{:nerves, "~> 0.7", runtime: false},
+    {:nerves_leds, "~> 0.8.0"}] ++
     deps(@target)
   end
 

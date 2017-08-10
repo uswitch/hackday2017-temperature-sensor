@@ -22,3 +22,5 @@ use Mix.Config
 config :bootloader,
   init: [:nerves_runtime],
   app: :temperature_sensor
+
+config :nerves_leds, names: [ green: "led0" ]
