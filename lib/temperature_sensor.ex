@@ -1,0 +1,3 @@
+defmodule TemperatureSensor do
+  
+end
