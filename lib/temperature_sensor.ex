@@ -4,11 +4,18 @@ defmodule TemperatureSensor do
   @a_pin 18
   @b_pin 23
 
-  def discharge(a_pid, b_pid) do
+  def discharge do
+    {:ok, b_pid} = GPIO.start_link(@b_pin, :output)
+
     GPIO.write(b_pid, 0)
+
+    GPIO.release(b_pid)
   end
 
-  def charge_time(a_pid, b_pid) do
+  def charge_time() do
+    {:ok, a_pid} = GPIO.start_link(@a_pin, :output)
+    {:ok, b_pid} = GPIO.start_link(@b_pin, :input)
+
     GPIO.write(a_pid, 1)
 
     current_time = :os.system_time(:microsecond)
@@ -17,6 +24,8 @@ defmodule TemperatureSensor do
 
     end_time = :os.system_time(:microsecond)
 
+    GPIO.release(a_pid)
+    GPIO.release(b_pid)
     end_time - current_time
   end
 
@@ -28,20 +37,11 @@ defmodule TemperatureSensor do
     read_gpio(GPIO.read(b_pid), b_pid)
   end
 
-  def analog_read({a_in, a_out, b_in, b_out}) do
-    discharge(a_in, b_out)
-    t = charge_time(a_out, b_in)
-    discharge(a_in, b_out)
+  def analog_read do
+    discharge
+    t = charge_time
+    discharge
 
     t
-  end
-
-  def setup do
-    {:ok, a_in} = GPIO.start_link(@a_pin, :input)
-    {:ok, b_out} = GPIO.start_link(@b_pin, :output)
-    {:ok, a_out} = GPIO.start_link(@a_pin, :output)
-    {:ok, b_in} = GPIO.start_link(@b_pin, :input)
-
-    {a_in, a_out, b_in, b_out}
   end
 end
