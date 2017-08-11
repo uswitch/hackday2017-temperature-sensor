@@ -63,7 +63,7 @@ defmodule TemperatureSensor do
     t = total / num_of_readings
     tt = t * 0.632 * 3.3
 
-    (tt / @c) - @r1
+    (tt / @c) - @r0
   end
 
   def read_temp_c do
