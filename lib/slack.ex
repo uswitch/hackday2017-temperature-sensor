@@ -11,7 +11,7 @@ defmodule Slack do
   end
 
   defp post(message) do
-    HTTPoison.post System.get_env("SLACK_URL"), message |> Poison.encode!, [{"Content-Type", "application/json"}]
+    HTTPoison.post Config.get(:temperature_sensor, :slack_url), message |> Poison.encode!, [{"Content-Type", "application/json"}]
   end
 
   defp should_notify?(key, time_now) do
