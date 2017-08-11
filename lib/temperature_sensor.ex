@@ -5,7 +5,7 @@ defmodule TemperatureSensor do
   @b_pin 23
 
   @c 0.38
-  @r1 1000
+  @r0 1000
   @b 3800
 
   def discharge do
