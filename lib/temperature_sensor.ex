@@ -25,9 +25,9 @@ defmodule TemperatureSensor do
     {:ok, a_pid} = GPIO.start_link(@a_pin, :output)
     {:ok, b_pid} = GPIO.start_link(@b_pin, :input)
 
-    GPIO.write(a_pid, 1)
-
     current_time = :os.system_time(:microsecond)
+
+    GPIO.write(a_pid, 1)
 
     read_gpio(GPIO.read(b_pid), b_pid)
 
