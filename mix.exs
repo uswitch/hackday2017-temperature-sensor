@@ -55,7 +55,8 @@ defmodule TemperatureSensor.Mixfile do
       {:nerves, "~> 0.7", runtime: false},
       {:elixir_ale, "~> 1.0"},
       {:nerves_leds, "~> 0.8.0"},
-      {:httpoison, "~> 0.12"}
+      {:httpoison, "~> 0.12"},
+      {:nerves_network, "~> 0.3.3"}
     ] ++
     deps(@target)
   end
