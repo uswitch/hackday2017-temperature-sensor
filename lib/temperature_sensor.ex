@@ -4,6 +4,10 @@ defmodule TemperatureSensor do
   @a_pin 18
   @b_pin 23
 
+  @c 0.38
+  @r1 1000
+  @b 3800
+
   def discharge do
     {:ok, b_pid} = GPIO.start_link(@b_pin, :output)
 
@@ -43,5 +47,33 @@ defmodule TemperatureSensor do
     discharge
 
     t
+  end
+
+  def read_resistance do
+    def r(0, total) do
+      total
+    end
+
+    def r(count, total) do
+      r(count - 1, total + analog_read())
+    end
+
+    num_of_readings = 10
+    total = r(num_of_readings, 0)
+    t = total / num_of_readings
+    tt = t * 0.632 * 3.3
+
+    (tt / @c) - @r1
+  end
+
+  def read_temp_c do
+    resistance = read_resistance()
+
+    t0 = 273.15
+    t25 = t0 + 25
+
+    inv_t = 1 / t25 + 1/@b * :math.log(resistance / @r0)
+
+    1/inv_t - t0
   end
 end
