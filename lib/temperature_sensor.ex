@@ -5,7 +5,8 @@ defmodule TemperatureSensor do
   @b_pin 23
 
   @c 0.38
-  @r0 1000
+  @r0 1000.0
+  @r1 1000
   @b 3800
 
   def discharge do
@@ -63,7 +64,7 @@ defmodule TemperatureSensor do
     t = total / num_of_readings
     tt = t * 0.632 * 3.3
 
-    (tt / @c) - @r0
+    (tt / @c) - @r1
   end
 
   def read_temp_c do
