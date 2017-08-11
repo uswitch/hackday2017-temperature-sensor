@@ -17,25 +17,16 @@ defmodule Slack do
   defp should_notify?(key, time_now) do
     case :ets.lookup(:notifications, key) do
       [] -> true
-      last_notified ->
+      {:cold, last_notified} ->
         DateTime.diff(last_notified, time_now, :minutes) > 15
       _ -> false
     end
   end
 
-  def log(key, time) do
+  defp log(key, time) do
     :ets.insert(:notifications, {key, time})
   end
 
-  defp message(:cold, temperature) do
-    %{
-      text: "Oh no! It's quite chilly up here (#{temperature} °C). Could someone please adjust the A/C? :snowman:"
-    }
-  end
-
-  defp message(:warm, temperature) do
-    %{
-      text: "It's all good here again! (#{temperature} °C) :sunny:"
-    }
-  end
+  defp message(:cold, temperature), do: "Oh no! It's quite chilly up here (#{temperature} °C). Could someone please adjust the A/C? :snowman:"
+  defp message(:warm, temperature), do: "It's all good here again! (#{temperature} °C) :sunny:"
 end
