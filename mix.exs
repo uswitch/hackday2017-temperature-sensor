@@ -67,7 +67,7 @@ defmodule TemperatureSensor.Mixfile do
     [ system(target),
       {:bootloader, "~> 0.1"},
       {:nerves_runtime, "~> 0.4"},
-      {:nerves_wpa_supplicant, "~> 0.3.2"}
+      {:nerves_network, "~> 0.3.3"}
     ]
   end
 

@@ -24,3 +24,15 @@ config :bootloader,
   app: :temperature_sensor
 
 config :nerves_leds, names: [ green: "led0" ]
+
+config :nerves_network,
+  regulatory_domain: "UK"
+
+  config :nerves_network, :default,
+  wlan0: [
+    ssid: "temperature",
+    key_mgmt: :NONE
+  ],
+  eth0: [
+    ipv4_address_method: :dhcp
+  ]
