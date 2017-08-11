@@ -76,4 +76,8 @@ defmodule TemperatureSensor do
 
     1/inv_t - t0
   end
+
+  def start do
+    :ets.new(:notifications, [:named_table])
+  end
 end
