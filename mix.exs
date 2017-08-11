@@ -68,7 +68,7 @@ defmodule TemperatureSensor.Mixfile do
       {:bootloader, "~> 0.1"},
       {:nerves_runtime, "~> 0.4"},
       {:nerves_network, "~> 0.3.3"},
-      {:nerves_ntp, "~> 0.1.0"}
+      {:nerves_ntp, git: "https://github.com/evokly/nerves_ntp"}
     ]
   end
 

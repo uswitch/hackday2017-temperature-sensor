@@ -6,12 +6,12 @@ defmodule Slack do
   defp action(key, temperature) do
     with time_now <- DateTime.utc_now(),
          true <- should_notify?(key, time_now),
-         {:ok, _} <- message(key, temperature) |> post,
+         {:ok, output} <- message(key, temperature) |> post,
       do: log(key, time_now)
   end
 
   defp post(message) do
-    HTTPoison.post Application.get_env(:temperature_sensor, :slack_url), message |> Poison.encode!, [{"Content-Type", "application/json"}]
+    HTTPoison.post Application.get_env(:temperature_sensor, :slack_url), %{text: message} |> Poison.encode!, [{"Content-Type", "application/json"}]
   end
 
   defp should_notify?(key, time_now) do
