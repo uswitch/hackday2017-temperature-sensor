@@ -38,7 +38,7 @@ defmodule TemperatureSensor.Mixfile do
   end
   def application(_target) do
     [mod: {TemperatureSensor.Application, []},
-     extra_applications: [:logger, :nerves_wpa_supplicant]]
+     extra_applications: [:logger, :nerves_wpa_supplicant, :nerves_ntp]]
   end
 
   # Dependencies can be Hex packages:
@@ -67,7 +67,8 @@ defmodule TemperatureSensor.Mixfile do
     [ system(target),
       {:bootloader, "~> 0.1"},
       {:nerves_runtime, "~> 0.4"},
-      {:nerves_network, "~> 0.3.3"}
+      {:nerves_network, "~> 0.3.3"},
+      {:nerves_ntp, "~> 0.1.0"}
     ]
   end
 

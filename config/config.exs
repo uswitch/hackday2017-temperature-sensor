@@ -39,3 +39,14 @@ config :nerves_network,
   eth0: [
     ipv4_address_method: :dhcp
   ]
+
+# ntpd binary to use
+config :nerves_ntp, :ntpd, "/usr/sbin/ntpd"
+ 
+# servers to sync time from
+config :nerves_ntp, :servers, [
+    "0.pool.ntp.org",
+    "1.pool.ntp.org",
+    "2.pool.ntp.org",
+    "3.pool.ntp.org"
+  ]
