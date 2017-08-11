@@ -23,6 +23,9 @@ config :bootloader,
   init: [:nerves_runtime],
   app: :temperature_sensor
 
+config :nerves, :firmware,
+  rootfs_overlay: "rootfs_overlay"
+
 config :nerves_leds, names: [ green: "led0" ]
 
 config :nerves_network,
