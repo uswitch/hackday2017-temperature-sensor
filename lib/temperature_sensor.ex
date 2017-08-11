@@ -4,17 +4,21 @@ defmodule TemperatureSensor do
   @a_pin 18
   @b_pin 23
 
-  @c 0.38
+  @c 0.33
   @r0 1000.0
   @r1 1000
   @b 3800
 
   def discharge do
+    {:ok, a_pid} = GPIO.start_link(@a_pin, :input)
     {:ok, b_pid} = GPIO.start_link(@b_pin, :output)
 
     GPIO.write(b_pid, 0)
 
     GPIO.release(b_pid)
+    GPIO.release(a_pid)
+
+    :timer.sleep(10)
   end
 
   def charge_time() do
