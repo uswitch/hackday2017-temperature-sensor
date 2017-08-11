@@ -49,15 +49,15 @@ defmodule TemperatureSensor do
     t
   end
 
+  def r(0, total) do
+    total
+  end
+
+  def r(count, total) do
+    r(count - 1, total + analog_read())
+  end
+
   def read_resistance do
-    def r(0, total) do
-      total
-    end
-
-    def r(count, total) do
-      r(count - 1, total + analog_read())
-    end
-
     num_of_readings = 10
     total = r(num_of_readings, 0)
     t = total / num_of_readings
