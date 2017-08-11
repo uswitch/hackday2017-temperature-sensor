@@ -1,30 +1,30 @@
 defmodule Slack do
 
-  def notify(temperature) when temperature <= 15 do
-    if spam_check(:cold) do
-      message(:cold, temperature) |> post
-    end
+  def notify(temperature) when temperature <= 15, do: action(:cold, temperature)
+  def notify(temperature) when temperature > 15, do: action(:warm, temperature)
+
+  defp action(key, temperature) do
+    with time_now <- DateTime.utc_now(),
+         true <- should_notify?(key, time_now),
+         {:ok, _} <- message(key, temperature) |> post,
+      do: log(key, time_now)
   end
 
-  def notify(temperature) when temperature > 15 do
-    if spam_check(:warm) do
-      message(:warm, temperature) |> post
-    end
-  end
-
-  def post(message) do
+  defp post(message) do
     HTTPoison.post System.get_env("SLACK_URL"), message |> Poison.encode!, [{"Content-Type", "application/json"}]
   end
 
-
-  def spam_check(key) do
-    now  = DateTime.utc_now()
-
+  defp should_notify?(key, time_now) do
     case :ets.lookup(:notifications, key) do
-      []-> true
+      [] -> true
       last_notified ->
-        DateTime.diff(last_notified, now, :minutes) > 15
+        DateTime.diff(last_notified, time_now, :minutes) > 15
+      _ -> false
     end
+  end
+
+  def log(key, time) do
+    :ets.insert(:notifications, {key, time})
   end
 
   defp message(:cold, temperature) do
